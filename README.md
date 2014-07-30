@@ -52,7 +52,11 @@ d) "maxRow": Sets a limit of results to display from the query's output.
 Output
 ======
 
-This ViewTool's output is a ArrayList<HashMap<String, String>> where you can get results on a For loop.
+This ViewTool's output is an 
+```
+ArrayList<HashMap<String, String>> 
+```
+object where you can get results through a For loop.
 
 Code:
 ```
