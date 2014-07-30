@@ -5,11 +5,13 @@ This OSGi viewtool allows any dotcms user with proper permissions to run SQL sta
 
 Requirements:
 
-1. The User must have the "Scripting Developer" role assigned to it in order to execute this ViewTool from a Content/Widget.
+1. This ViewTool can only be executed from Contents or Widgets.
 
-2. In case the ViewTool is intended to query a different database than dotcms, this Datasource must be defined in {dotcms_home}/tomcat/conf/Catalina/localhost/ROOT.xml file (for 2.x versions of dotcms) or in {dotcms_home}/extra/tomcat-7/context.xml (for 3.x versions of dotcms). For non-standard versions of dotcms, a different connection pool must be set directly in the Application Server.
+2. The Content/Widget Editor User must have the "Scripting Developer" role assigned to it in order to execute this ViewTool from a Content/Widget.
 
-3. If the user wants to use the ViewTool for querying the dotcms database:
+3. In case the ViewTool is intended to query a different database than dotcms, this Datasource must be defined in {dotcms_hom}/tomcat/conf/Catalina/localhost/ROOT.xml file (for 2.x versions of dotcms) or in {dotcms_home}/extra/tomcat-7/context.xml (for 3.x versions of dotcms). For non-standard versions of dotcms, a different connection pool must be set directly in the Application Server.
+
+4. If the user wants to use the ViewTool for querying the dotcms database:
 
 a) It can create a different datasource with limited permissions over the database/schema (following the 2nd Requirement from this document).
 
@@ -19,9 +21,8 @@ ALLOW_VELOCITY_SQL_ACCESS_TO_DOTCMS_DB
 
 This variable should be customized through a configuration plugin (static plugin).
 
-4. This ViewTool can only be executed from Contents or Widgets.
-
 How to use it: 
+=============
 
 #set($resultsList = $sqlResultsTool.getSQLResults(String datasource, String query, int startRow, int maxRow))
 
