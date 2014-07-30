@@ -157,6 +157,5 @@ public class SQLResultsViewTool implements ViewTool {
 			Logger.warn(this.getClass(), "Scripting called with error" + e);
 			return false;	
 		}
-		return false;
 	}
 }
