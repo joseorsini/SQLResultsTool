@@ -23,8 +23,12 @@ This variable should be customized through a configuration plugin (static plugin
 
 How to use it: 
 =============
-
+ViewTool Call:
+```
 #set($resultsList = $sqlResultsTool.getSQLResults(String datasource, String query, int startRow, int maxRow))
+```
+
+Parameters:
 
 a) "datasource": can be set to:
 
