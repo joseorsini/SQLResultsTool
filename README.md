@@ -13,7 +13,7 @@ Requirements:
 
 4. If the user wants to use the ViewTool for querying the dotcms database:
 
-a) It can create a different datasource with limited permissions over the database/schema (following the 2nd Requirement from this document).
+a) The user can create a different datasource with limited permissions over the database/schema (following the 2nd Requirement from this document).
 
 b) If it's not possible to create a limited datasource, it can query the dotcms database with the "default" datasource as long as this variable is set to true in the dotmarketing-config.properties file
 
