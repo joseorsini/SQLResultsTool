@@ -40,7 +40,8 @@ public class SQLResultsViewTool implements ViewTool {
 		if(!canUserEvaluate()){
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("hasDotConnectSQLError", "true");
-			map.put("dotConnectSQLError", "External SQL Scripting is disabled in your dotcms instance.");
+			map.put("dotConnectSQLError", "Content Editor cannot execute the SQLResultsViewTool becase it does not have enough permissions to do it");
+			Logger.error(this,"Content Editor cannot execute the SQLResultsViewTool becase it does not have enough permissions to do it");
 			errorResults.add(map);
 			return errorResults;
 		} else{
@@ -57,31 +58,31 @@ public class SQLResultsViewTool implements ViewTool {
 			        	return new ArrayList<HashMap<String, String>>();
 			        }
 			        if (sql.toLowerCase().indexOf("user_") > -1) {
-			        	Logger.error(this,"getSQLResults macro is trying to query the user_ table");
+			        	Logger.error(this,"getSQLResults Tool is trying to query the user_ table");
 					Logger.debug(this,"Check content with id: " + con.getIdentifier());
 					HashMap<String, String> map = new HashMap<String, String>();
 					map.put("hasDotConnectSQLError", "true");
-					map.put("dotConnectSQLError", "getSQLResults macro is trying to query the user_ table");
+					map.put("dotConnectSQLError", "getSQLResults Tool is trying to query the user_ table");
 					errorResults.add(map);
 					return new ArrayList<HashMap<String, String>>();
 			        }
 			        if (sql.toLowerCase().indexOf("cms_role") > -1) {
-			            	Logger.error(this,"getSQLResults macro is trying to query the cms_role table");
+			            	Logger.error(this,"getSQLResults Tool is trying to query the cms_role table");
 					Logger.debug(this,"Check content with id: " + con.getIdentifier());
 			            	HashMap<String, String> map = new HashMap<String, String>();
 			            	map.put("hasDotConnectSQLError", "true");
-			            	map.put("dotConnectSQLError", "getSQLResults macro is trying to query the cms_role table");
+			            	map.put("dotConnectSQLError", "getSQLResults Tool is trying to query the cms_role table");
 			            	errorResults.add(map);
 			            	return new ArrayList<HashMap<String, String>>();
 			        }
 			        if (sql.toLowerCase().indexOf("delete from") > -1 || sql.toLowerCase().indexOf("drop") > -1
 			        	|| sql.toLowerCase().indexOf("truncate") > -1 || sql.toLowerCase().indexOf("alter table") > -1
 		                        || sql.toLowerCase().indexOf("alter database") > -1 || sql.toLowerCase().startsWith("update")) {
-			           	Logger.error(this,"getSQLResults macro is trying to run a forbidden query");
+			           	Logger.error(this,"getSQLResults Tool is trying to run a forbidden query");
 					Logger.debug(this,"Check content with id: " + con.getIdentifier());
 				        HashMap<String, String> map = new HashMap<String, String>();
 			           	map.put("hasDotConnectSQLError", "true");
-			            	map.put("dotConnectSQLError", "getSQLResults macro is trying to run a forbidden query");
+			            	map.put("dotConnectSQLError", "getSQLResults Tool is trying to run a forbidden query");
 			           	errorResults.add(map);
 			            	return new ArrayList<HashMap<String, String>>();
 			        }
@@ -108,11 +109,11 @@ public class SQLResultsViewTool implements ViewTool {
 
 					if (dataSource.equals("default")) {
 					    	if(!Config.getBooleanProperty("ALLOW_VELOCITY_SQL_ACCESS_TO_DOTCMS_DB", false)){
-					        	Logger.error(this,"getSQLResults macro is trying to execute queries using the default connection pool.");
+					        	Logger.error(this,"getSQLResults Tool is trying to execute queries using the default connection pool.");
 			        		    	Logger.debug(this,"ALLOW_VELOCITY_SQL_ACCESS_TO_DOTCMS_DB is set to false");
 							HashMap<String, String> map = new HashMap<String, String>();
 							map.put("hasDotConnectSQLError", "true");
-							map.put("dotConnectSQLError", "getSQLResults macro is trying to execute queries using the default connection pool. ALLOW_VELOCITY_SQL_ACCESS_TO_DOTCMS_DB is set to false");
+							map.put("dotConnectSQLError", "getSQLResults Tool is trying to execute queries using the default connection pool. ALLOW_VELOCITY_SQL_ACCESS_TO_DOTCMS_DB is set to false");
 							errorResults.add(map);
 							return new ArrayList<HashMap<String, String>>();
 			        	    	}
@@ -131,7 +132,7 @@ public class SQLResultsViewTool implements ViewTool {
 			        }   
 			}
 			catch(Exception e){
-				Logger.error(this,"There was a problem retrieving the content where ViewTool was called");
+				Logger.error(this,"There was a problem retrieving the content where SQLResultsViewTool was called");
 		        	HashMap<String, String> map = new HashMap<String, String>();
 		           	map.put("hasDotConnectSQLError", "true");
 			        map.put("dotConnectSQLError", "There was a sql error:" + e.getMessage());
