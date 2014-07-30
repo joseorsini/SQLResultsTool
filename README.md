@@ -7,15 +7,9 @@ Requirements:
 
 1. The User must have the "Scripting Developer" role assigned to it in order to execute this ViewTool from a Content/Widget.
 
-2. SQL Scripting must be enabled in the dotcms environment. In order to enable this, this variable must be set to true in the dotmarketing-config.properties file
+2. In case the ViewTool is intended to query a different database than dotcms, this Datasource must be defined in {dotcms_home}/tomcat/conf/Catalina/localhost/ROOT.xml file (for 2.x versions of dotcms) or in {dotcms_home}/extra/tomcat-7/context.xml (for 3.x versions of dotcms). For non-standard versions of dotcms, a different connection pool must be set directly in the Application Server.
 
-ENABLE_SQL_SCRIPTING 
-
-This variable should be customized through a configuration plugin (static plugin).
-
-3. In case the ViewTool is intended to query a different database than dotcms, this Datasource must be defined in {dotcms_home}/tomcat/conf/Catalina/localhost/ROOT.xml file (for 2.x versions of dotcms) or in {dotcms_home}/extra/tomcat-7/context.xml (for 3.x versions of dotcms). For non-standard versions of dotcms, a different connection pool must be set directly in the Application Server.
-
-4. If the user wants to use the ViewTool for querying the dotcms database:
+3. If the user wants to use the ViewTool for querying the dotcms database:
 
 a) It can create a different datasource with limited permissions over the database/schema (following the 2nd Requirement from this document).
 
@@ -24,6 +18,8 @@ b) If it's not possible to create a limited datasource, it can query the dotcms 
 ALLOW_VELOCITY_SQL_ACCESS_TO_DOTCMS_DB
 
 This variable should be customized through a configuration plugin (static plugin).
+
+4. This ViewTool can only be executed from Contents or Widgets.
 
 How to use it: 
 
@@ -47,5 +43,4 @@ b) "query": The SQL query you want to run from a Content/Widget in a frontend pa
 c) "startRow": It allows results pagination. If pagination is not desired, set it to 0.
 
 d) "maxRow": Sets a limit of results to display from the query's output.
-
 
