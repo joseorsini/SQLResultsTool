@@ -40,7 +40,7 @@ public class SQLResultsViewTool implements ViewTool {
 		   if(!canUserEvaluate()){
 	            HashMap<String, String> map = new HashMap<String, String>();
 	            map.put("hasDotConnectSQLError", "true");
-	            map.put("dotConnectSQLError", "External scripting is disabled in your dotcms instance.");
+	            map.put("dotConnectSQLError", "External SQL Scripting is disabled in your dotcms instance.");
 	            errorResults.add(map);
 	            return errorResults;
 		   }
@@ -148,8 +148,8 @@ public class SQLResultsViewTool implements ViewTool {
 	    }
 
 	    protected boolean canUserEvaluate(){
-		    if(!Config.getBooleanProperty("ENABLE_SCRIPTING", false)){
-			    Logger.warn(this.getClass(), "Scripting called and ENABLE_SCRIPTING set to false");
+		    if(!Config.getBooleanProperty("ENABLE_SQL_SCRIPTING", false)){
+			    Logger.warn(this.getClass(), "Scripting called and ENABLE_SQL_SCRIPTING set to false");
 			    return false;
 		    }
             try{

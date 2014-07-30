@@ -7,9 +7,9 @@ Requirements:
 
 1. The User must have the "Scripting Developer" role assigned to it in order to execute this ViewTool from a Content/Widget.
 
-2. SQL Scripting must be enabled in the dotcms environment. In order to enable this, this variable must be set to true in the dotmarketing-config.properties file
+2. Scripting must be enabled in the dotcms environment. In order to enable this, this variable must be set to true in the dotmarketing-config.properties file
 
-ENABLE_SQL_SCRIPTING 
+ENABLE_SCRIPTING 
 
 This variable should be customized through a configuration plugin (static plugin).
 
