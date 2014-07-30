@@ -33,7 +33,7 @@ Parameters:
 a) "datasource": can be set to:
 
 - "default": The default datasource specified for accessing the dotcms database.
-- "custom": A custom datasource specified for limited access to dotcmcs database or any other database.
+- "custom": A custom datasource specified for limited access to dotcms database or any other database.
 
 b) "query": The SQL query you want to run from a Content/Widget in a frontend page. Restricted queries are:
 
