@@ -3,7 +3,7 @@ SQLResultsTool
 
 This OSGi viewtool allows any dotcms user with proper permissions to run SQL statements from frontend pages.
 
-Requirements:
+**Requirements:**
 
 1. This ViewTool can only be executed from Contents or Widgets.
 
@@ -24,7 +24,7 @@ This variable should be customized through a configuration plugin (static plugin
 How to use it: 
 =============
 
-getSQLResults Tool:
+**getSQLResults Tool:**
 ```
 #set($resultsList = $sqlResultsTool.getSQLResults(String datasource, String query, int startRow, int maxRow))
 ```
@@ -50,7 +50,7 @@ c) "startRow": It allows results pagination. If pagination is not desired, set i
 
 d) "maxRow": Sets a limit of results to display from the query's output.
 
-getParameterizedSQLResults Tool:
+**getParameterizedSQLResults Tool:**
 ```
 #set($resultsList = $sqlResultsTool.getParameterizedSQLResults(String datasource, String query, ArrayList<Object> params, int startRow, int maxRow))
 ```
