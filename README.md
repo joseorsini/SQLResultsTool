@@ -23,7 +23,8 @@ This variable should be customized through a configuration plugin (static plugin
 
 How to use it: 
 =============
-ViewTool Call:
+
+getSQLResults Tool:
 ```
 #set($resultsList = $sqlResultsTool.getSQLResults(String datasource, String query, int startRow, int maxRow))
 ```
@@ -49,6 +50,36 @@ c) "startRow": It allows results pagination. If pagination is not desired, set i
 
 d) "maxRow": Sets a limit of results to display from the query's output.
 
+getParameterizedSQLResults Tool:
+```
+#set($resultsList = $sqlResultsTool.getParameterizedSQLResults(String datasource, String query, ArrayList<Object> params, int startRow, int maxRow))
+```
+
+Parameters:
+
+a) "datasource": can be set to:
+
+- "default": The default datasource specified for accessing the dotcms database.
+- "custom": A custom datasource specified for limited access to dotcms database or any other database.
+
+b) "query": The SQL query you want to run from a Content/Widget in a frontend page. Restricted queries are:
+
+- DELETE FROM.
+- DROP.
+- TRUNCATE.
+- ALTER DATABASE.
+- ALTER TABLE.
+- Any query that hits the "user_" or "cms_role" tables from the dotcms database.
+- All queries or operations set at database level by the DBA.
+
+NOTE: for parameterized queries, the '?' character is required for parameterizing queries and conditions.
+
+c) "params": It's a list of objects that will act as query's parameters. The size of this List and the amount of allowed parameters in the query must be the same.
+
+d) "startRow": It allows results pagination. If pagination is not desired, set it to 0.
+
+e) "maxRow": Sets a limit of results to display from the query's output.
+
 Output
 ======
 
@@ -60,52 +91,100 @@ object where you can get results through a For loop.
 
 Code:
 ```
-<h3>Calling ViewTool from a Content:</h3>
+<h3>Calling getSQLResults Tool from a Content:</h3>
 <br>
-Query: "select title, identifier, inode, mod_date from contentlet where identifier = 'd05ef74e-5903-4c43-bef6-77749f271ff8' order by mod_date desc"
+Query: select * from identifier where asset_type = 'htmlpage' and parent_path = '/home/'
 <br><br>
-#set($resultsList = $sqlResultsTool.getSQLResults("default", "select title, identifier, inode, mod_date from contentlet where identifier = 'd05ef74e-5903-4c43-bef6-77749f271ff8' order by mod_date desc", 0, 4))
+#set($query = "select * from identifier where asset_type = 'htmlpage' and parent_path = '/home/'")
+#set($resultsList = $sqlResultsTool.getSQLResults("default", "$!{query}", 0, 4))
 Results: $resultsList
 <br>
 <br>
 #if($resultsList.size() > 0)
  #foreach ($res in $resultsList)
  <ul>
-  <li>Title: $res.get("title")</li>
-  <li>Identifier: $res.get("identifier")</li>
-  <li>Inode: $res.get("inode")</li>
-  <li>Mod Date: $res.get("mod_date")</li>
+  <li>ID: $res.get("id")</li>
+  <li>Parent Path: $res.get("parent_path")</li>
+  <li>Asset Name: $res.get("asset_name")</li>
+  <li>Asset Type: $res.get("asset_type")</li>
  </ul>
  #end
 #end
+<br><br>
+<h3>Calling getParameterizedSQLResults Tool from a Content:</h3>
+<br>
+Query: "select * from identifier where asset_type = ? and parent_path = ?"
+<br>
+Params: 'htmlpage','/home/'
+<br><br>
+#set($query = "select * from identifier where asset_type = ? and parent_path = ?")
+#set($paramsList = $contents.getEmptyList())
+#set($temp = $paramsList.add("htmlpage"))
+#set($temp = $paramsList.add("/home/"))
+#set($resultsList = $sqlResultsTool.getParameterizedSQLResults("default", "$!query", $paramsList, 0, 4))
+Results: $resultsList
+<br>
+<br>
+#if($resultsList.size() > 0)
+ #foreach ($res in $resultsList)
+ <ul>
+  <li>ID: $res.get("id")</li>
+  <li>Parent Path: $res.get("parent_path")</li>
+  <li>Asset Name: $res.get("asset_name")</li>
+  <li>Asset Type: $res.get("asset_type")</li>
+ </ul>
+ #end
+#end​
 ```
 Output:
 ```
-Calling ViewTool from a Content:
+Calling getSQLResults Tool from a Content:
 
 
-Query: "select title, identifier, inode, mod_date from contentlet where identifier = 'd05ef74e-5903-4c43-bef6-77749f271ff8' order by mod_date desc" 
+Query: select * from identifier where asset_type = 'htmlpage' and parent_path = '/home/' 
 
-Results: [{title=Testing new viewtool, mod_date=2014-07-30 18:26:49.072, oddoreven=0, rownumber=0, inode=bb11b6cf-d8a6-467f-ab94-6d8becaca1c4, identifier=d05ef74e-5903-4c43-bef6-77749f271ff8}, {title=Testing new viewtool, mod_date=2014-07-30 18:26:33.527, oddoreven=1, rownumber=1, inode=97bccd7a-9014-40a7-a838-d134bfe20aa0, identifier=d05ef74e-5903-4c43-bef6-77749f271ff8}, {title=Testing new viewtool, mod_date=2014-07-30 18:26:22.952, oddoreven=0, rownumber=2, inode=51b3eab5-bf2d-40dc-92dd-1559a8246be5, identifier=d05ef74e-5903-4c43-bef6-77749f271ff8}, {title=Testing new viewtool, mod_date=2014-07-30 18:24:48.142, oddoreven=1, rownumber=3, inode=345690ab-ea5f-4042-a37b-695bc5389f74, identifier=d05ef74e-5903-4c43-bef6-77749f271ff8}] 
+Results: [{host_inode=48190c8c-42c4-46af-8d1a-0cd5db894797, id=69bd8ab7-861c-4eba-826b-19adec1d7ec8, parent_path=/home/, asset_name=index.html, asset_type=htmlpage, oddoreven=0, syspublish_date=, rownumber=0, sysexpire_date=}, {host_inode=d234cfc0-926e-49d1-a7a8-d7033ffe793f, id=c09cdd1c-3740-409d-bc6b-dfdcb52ca070, parent_path=/home/, asset_name=index.html, asset_type=htmlpage, oddoreven=1, syspublish_date=, rownumber=1, sysexpire_date=}, {host_inode=d234cfc0-926e-49d1-a7a8-d7033ffe793f, id=baf137d7-961a-494d-bd4d-786b0a60bac8, parent_path=/home/, asset_name=locations.html, asset_type=htmlpage, oddoreven=0, syspublish_date=, rownumber=2, sysexpire_date=}, {host_inode=48190c8c-42c4-46af-8d1a-0cd5db894797, id=c9162a5c-6e6b-4e68-8bd7-4d46e8a929f4, parent_path=/home/, asset_name=mobile-confirm.html, asset_type=htmlpage, oddoreven=1, syspublish_date=, rownumber=3, sysexpire_date=}] 
 
-Title: Testing new viewtool
-Identifier: d05ef74e-5903-4c43-bef6-77749f271ff8
-Inode: bb11b6cf-d8a6-467f-ab94-6d8becaca1c4
-Mod Date: 2014-07-30 18:26:49.072
+ID: 69bd8ab7-861c-4eba-826b-19adec1d7ec8
+Parent Path: /home/
+Asset Name: index.html
+Asset Type: htmlpage
+ID: c09cdd1c-3740-409d-bc6b-dfdcb52ca070
+Parent Path: /home/
+Asset Name: index.html
+Asset Type: htmlpage
+ID: baf137d7-961a-494d-bd4d-786b0a60bac8
+Parent Path: /home/
+Asset Name: locations.html
+Asset Type: htmlpage
+ID: c9162a5c-6e6b-4e68-8bd7-4d46e8a929f4
+Parent Path: /home/
+Asset Name: mobile-confirm.html
+Asset Type: htmlpage
 
-Title: Testing new viewtool
-Identifier: d05ef74e-5903-4c43-bef6-77749f271ff8
-Inode: 97bccd7a-9014-40a7-a838-d134bfe20aa0
-Mod Date: 2014-07-30 18:26:33.527
 
-Title: Testing new viewtool
-Identifier: d05ef74e-5903-4c43-bef6-77749f271ff8
-Inode: 51b3eab5-bf2d-40dc-92dd-1559a8246be5
-Mod Date: 2014-07-30 18:26:22.952
+Calling getParameterizedSQLResults Tool from a Content:
 
-Title: Testing new viewtool
-Identifier: d05ef74e-5903-4c43-bef6-77749f271ff8
-Inode: 345690ab-ea5f-4042-a37b-695bc5389f74
-Mod Date: 2014-07-30 18:24:48.142
+
+Query: "select * from identifier where asset_type = ? and parent_path = ?" 
+Params: 'htmlpage','/home/' 
+
+Results: [{host_inode=48190c8c-42c4-46af-8d1a-0cd5db894797, id=69bd8ab7-861c-4eba-826b-19adec1d7ec8, parent_path=/home/, asset_name=index.html, asset_type=htmlpage, oddoreven=0, syspublish_date=, rownumber=0, sysexpire_date=}, {host_inode=d234cfc0-926e-49d1-a7a8-d7033ffe793f, id=c09cdd1c-3740-409d-bc6b-dfdcb52ca070, parent_path=/home/, asset_name=index.html, asset_type=htmlpage, oddoreven=1, syspublish_date=, rownumber=1, sysexpire_date=}, {host_inode=d234cfc0-926e-49d1-a7a8-d7033ffe793f, id=baf137d7-961a-494d-bd4d-786b0a60bac8, parent_path=/home/, asset_name=locations.html, asset_type=htmlpage, oddoreven=0, syspublish_date=, rownumber=2, sysexpire_date=}, {host_inode=48190c8c-42c4-46af-8d1a-0cd5db894797, id=c9162a5c-6e6b-4e68-8bd7-4d46e8a929f4, parent_path=/home/, asset_name=mobile-confirm.html, asset_type=htmlpage, oddoreven=1, syspublish_date=, rownumber=3, sysexpire_date=}] 
+
+ID: 69bd8ab7-861c-4eba-826b-19adec1d7ec8
+Parent Path: /home/
+Asset Name: index.html
+Asset Type: htmlpage
+ID: c09cdd1c-3740-409d-bc6b-dfdcb52ca070
+Parent Path: /home/
+Asset Name: index.html
+Asset Type: htmlpage
+ID: baf137d7-961a-494d-bd4d-786b0a60bac8
+Parent Path: /home/
+Asset Name: locations.html
+Asset Type: htmlpage
+ID: c9162a5c-6e6b-4e68-8bd7-4d46e8a929f4
+Parent Path: /home/
+Asset Name: mobile-confirm.html
+Asset Type: htmlpage
 ```
-
