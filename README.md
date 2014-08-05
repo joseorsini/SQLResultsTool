@@ -22,9 +22,10 @@ ALLOW_VELOCITY_SQL_ACCESS_TO_DOTCMS_DB
 This variable should be customized through a configuration plugin (static plugin).
 
 How to use it: 
-=============
+==============
 
 **getSQLResults Tool:**
+-----------------------
 ```
 #set($resultsList = $sqlResultsTool.getSQLResults(String datasource, String query, int startRow, int maxRow))
 ```
@@ -51,6 +52,7 @@ c) "startRow": It allows results pagination. If pagination is not desired, set i
 d) "maxRow": Sets a limit of results to display from the query's output.
 
 **getParameterizedSQLResults Tool:**
+------------------------------------
 ```
 #set($resultsList = $sqlResultsTool.getParameterizedSQLResults(String datasource, String query, ArrayList<Object> params, int startRow, int maxRow))
 ```
