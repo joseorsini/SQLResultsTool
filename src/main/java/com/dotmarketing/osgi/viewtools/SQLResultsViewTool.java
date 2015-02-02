@@ -264,7 +264,7 @@ public class SQLResultsViewTool implements ViewTool {
         }
         if (sql.toLowerCase().indexOf("delete ") > -1 || sql.toLowerCase().indexOf("drop ") > -1
         	|| sql.toLowerCase().indexOf("truncate ") > -1 || sql.toLowerCase().indexOf("alter ") > -1
-            || sql.toLowerCase().indexOf("create ") > -1 || sql.toLowerCase().startsWith("update ")) {
+            || sql.toLowerCase().indexOf("create ") > -1 || sql.toLowerCase().indexOf("update ") > -1) {
            	Logger.error(this,"getSQLResults Tool is trying to run a forbidden query");
            	Logger.debug(this,"Check content with id: " + con.getIdentifier());
 	        HashMap<String, String> map = new HashMap<String, String>();
