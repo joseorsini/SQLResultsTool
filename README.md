@@ -44,6 +44,7 @@ b) "query": The SQL query you want to run from a Content/Widget in a frontend pa
 - TRUNCATE.
 - ALTER.
 - CREATE. 
+- UPDATE.
 - Any query that hits the "user_" or "cms_role" tables from the dotcms database.
 - All queries or operations set at database level by the DBA.
 
@@ -70,7 +71,8 @@ b) "query": The SQL query you want to run from a Content/Widget in a frontend pa
 - DROP.
 - TRUNCATE.
 - ALTER.
-- CREATE
+- CREATE.
+- UPDATE.
 - Any query that hits the "user_" or "cms_role" tables from the dotcms database.
 - All queries or operations set at database level by the DBA.
 
