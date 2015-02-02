@@ -37,13 +37,13 @@ a) "datasource": can be set to:
 - "default": The default datasource specified for accessing the dotcms database.
 - "custom": A custom datasource specified for limited access to dotcms database or any other database.
 
-b) "query": The SQL query you want to run from a Content/Widget in a frontend page. Restricted queries are:
+b) "query": The SQL query you want to run from a Content/Widget in a frontend page. Restricted queries and SQL expressions are:
 
-- DELETE FROM.
+- DELETE.
 - DROP.
 - TRUNCATE.
-- ALTER DATABASE.
-- ALTER TABLE.
+- ALTER.
+- CREATE. 
 - Any query that hits the "user_" or "cms_role" tables from the dotcms database.
 - All queries or operations set at database level by the DBA.
 
@@ -64,13 +64,13 @@ a) "datasource": can be set to:
 - "default": The default datasource specified for accessing the dotcms database.
 - "custom": A custom datasource specified for limited access to dotcms database or any other database.
 
-b) "query": The SQL query you want to run from a Content/Widget in a frontend page. Restricted queries are:
+b) "query": The SQL query you want to run from a Content/Widget in a frontend page. Restricted queries and SQL expressions are:
 
-- DELETE FROM.
+- DELETE.
 - DROP.
 - TRUNCATE.
-- ALTER DATABASE.
-- ALTER TABLE.
+- ALTER.
+- CREATE
 - Any query that hits the "user_" or "cms_role" tables from the dotcms database.
 - All queries or operations set at database level by the DBA.
 
