@@ -19,7 +19,7 @@ b) If it's not possible to create a limited datasource, it can query the dotcms 
 
 ALLOW_VELOCITY_SQL_ACCESS_TO_DOTCMS_DB
 
-This variable should be customized through a configuration plugin (static plugin).
+This variable should be customized through a configuration plugin (static plugin). Restricted queries are not allowed even when ALLOW_VELOCITY_SQL_ACCESS_TO_DOTCMS_DB is set to true.
 
 How to use it: 
 ==============

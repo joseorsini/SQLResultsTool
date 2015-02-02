@@ -161,6 +161,12 @@ public class SQLResultsViewTool implements ViewTool {
 		        	    return errorResults;
 					}
 					
+					for(Object obj:params){
+						if(!isSQLValid(obj.toString(), con)){
+		        	    	return errorResults;
+						}
+					}
+					
 					DotConnect dc = new DotConnect();
 
 			        dc.setSQL(sql);
@@ -256,9 +262,9 @@ public class SQLResultsViewTool implements ViewTool {
             errorResults.add(map);
             return false;
         }
-        if (sql.toLowerCase().indexOf("delete from") > -1 || sql.toLowerCase().indexOf("drop") > -1
-        	|| sql.toLowerCase().indexOf("truncate") > -1 || sql.toLowerCase().indexOf("alter table") > -1
-            || sql.toLowerCase().indexOf("alter database") > -1 || sql.toLowerCase().startsWith("update")) {
+        if (sql.toLowerCase().indexOf("delete ") > -1 || sql.toLowerCase().indexOf("drop ") > -1
+        	|| sql.toLowerCase().indexOf("truncate ") > -1 || sql.toLowerCase().indexOf("alter ") > -1
+            || sql.toLowerCase().indexOf("create ") > -1 || sql.toLowerCase().startsWith("update ")) {
            	Logger.error(this,"getSQLResults Tool is trying to run a forbidden query");
            	Logger.debug(this,"Check content with id: " + con.getIdentifier());
 	        HashMap<String, String> map = new HashMap<String, String>();
